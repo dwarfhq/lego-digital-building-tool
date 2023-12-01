@@ -10,8 +10,14 @@
   "module": "./dist/brick-builder.js",
   "exports": {
     ".": {
-      "import": "./dist/brick-builder.js",
-      "require": "./dist/brick-builder.umd.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/brick-builder.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/brick-builder.umd.cjs"
+      }
     },
     "./dist/style.css": {
       "import": "./dist/style.css",
