@@ -18,7 +18,7 @@
       "require": "./dist/style.css"
     }
   },
-  "types": "./dist/src/brick-builder.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -33,6 +33,7 @@
     "react-dom": "^18.2.0",
     "three": "^0.152.0",
     "uuid": "^9.0.1",
+    "vite-plugin-dts": "^3.6.4",
     "vite-plugin-svgr": "^4.2.0",
     "zustand": "^4.4.7"
   },
