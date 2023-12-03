@@ -7,9 +7,10 @@ import { TutorialScene } from './TutorialScene'
 import { Pointer } from './Pointer'
 const MAX_PIXEL_RATIO = 1.5
 export class Application {
-  constructor(canvas, isTutorial) {
+  constructor({ canvas, isTutorial = false, cameraAnimation = true }) {
     this.canvas = canvas
     this.isTutorial = isTutorial
+    this.cameraAnimation = cameraAnimation
     this.makeCamera()
     this.makeRenderer()
     this.makePointer()
@@ -50,6 +51,7 @@ export class Application {
         $camera: this.$camera,
         $orbitControls: this.orbitControls,
         $renderer: this.renderer,
+        $cameraAnimation: this.cameraAnimation,
       })
     }
   }

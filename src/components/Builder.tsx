@@ -19,7 +19,7 @@ function Builder() {
   useEffect(() => {
     const canvasDom = document.getElementById('builder')
 
-    app.current = new Application(canvasDom, false)
+    app.current = new Application({ canvas: canvasDom })
   }, [])
 
   function closeTips() {
