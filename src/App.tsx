@@ -15,14 +15,14 @@ function BrickBuilder({ options }: { options: Activity }) {
 
   const [step, setStep] = useState<Step>('start-building')
   return (
-    <div className="w-full h-full bg-green overflow-hidden">
+    <div className="bb-w-full bb-h-full bb-bg-green bb-overflow-hidden">
       {step === 'start-building' && <StartBuilding start={() => setStep('building')} />}
       {step === 'building' && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="w-full h-full"
+          className="bb-w-full bb-h-full"
         >
           <Builder />
         </motion.div>

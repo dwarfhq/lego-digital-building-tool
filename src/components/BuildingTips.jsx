@@ -13,22 +13,22 @@ const icons = {
 
 function BuildingTips() {
   return (
-    <div className="w-screen relative flex justify-between max-w-[1200px] mb-8 text-white">
+    <div className="bb-w-screen bb-relative bb-flex bb-justify-between bb-max-w-[1200px] bb-mb-8 bb-text-white">
       {tips.map(({ title, message, icon }, idx) => {
         const TipIcon = icons[icon]
         return (
-          <div key={title} className="duration-500 flex-1 flex items center">
-            <div className="flex justify-center items-center box-content h-full w-full flex-col p-2">
-              <div className="rounded-xl bg-purple-dark text-white p-1 h-lg:p-[10px] aspect-square w-15 h-15 h-lg:w-19 h-lg:h-19 flex justify-center items-center shrink-0">
+          <div key={title} className="bb-duration-500 bb-flex-1 bb-flex bb-items-center bb-center">
+            <div className="bb-flex bb-justify-center bb-items-center bb-box-content bb-h-full bb-w-full bb-flex-col bb-p-2">
+              <div className="bb-rounded-xl bb-bg-purple-dark bb-text-white bb-p-1 bb-h-lg:p-[10px] bb-aspect-square bb-w-15 bb-h-15 bb-h-lg:w-19 bb-h-lg:h-19 bb-flex bb-justify-center bb-items-center bb-shrink-0">
                 <TipIcon />
               </div>
 
-              <div className="mt-[15px] leading-[19px] text-lg flex flex-col text-center max-w-[200px]">
-                <span className="capitalize text-base font-medium">{title}</span>
-                <span className="text-base mt-[15px]"> {message} </span>
+              <div className="bb-mt-[15px] bb-leading-[19px] bb-text-lg bb-flex bb-flex-col bb-text-center bb-max-w-[200px]">
+                <span className="bb-capitalize bb-text-base bb-font-medium">{title}</span>
+                <span className="bb-text-base bb-mt-[15px]"> {message} </span>
               </div>
             </div>
-            {tips.length - 1 !== idx && <div className="h-2/3 w-[1px] bg-white"></div>}
+            {tips.length - 1 !== idx && <div className="bb-h-2/3 bb-w-[1px] bb-bg-white"></div>}
           </div>
         )
       })}

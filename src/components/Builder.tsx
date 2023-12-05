@@ -57,29 +57,36 @@ function Builder() {
     app.current.downloadScene()
   }
   return (
-    <div className="w-full h-full overflow-hidden relative bg-purple ">
+    <div className="bb-w-full bb-h-full bb-overflow-hidden bb-relative bb-bg-purple ">
       <canvas
-        className={`w-full h-full transition-all duration-500 noselect ${
-          step === 'tips' ? '-translate-y-[20vh] scale-125' : 'translate-y-0 scale-100 '
+        className={`bb-w-full bb-h-full bb-transition-all bb-duration-500 bb-noselect ${
+          step === 'tips' ? 'bb--translate-y-[20vh] bb-scale-125' : 'bb-translate-y-0 bb-scale-100 '
         }`}
         id="builder"
       ></canvas>
       <div
-        className={`absolute left-1/2 -translate-x-1/2 bottom-12 z-30 mx-auto flex duration-500 transition-all ${
-          step === 'tips' ? 'translate-y-24 opacity-0' : 'translate-y-0 delay-1000 opacity-100'
+        className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-duration-500 bb-transition-all ${
+          step === 'tips'
+            ? 'bb-translate-y-24 bb-opacity-0'
+            : 'bb-translate-y-0 bb-delay-1000 bb-opacity-100'
         }`}
       >
-        <button onClick={submit} className="btn w-64">
+        <button onClick={submit} className="bb-btn bb-w-64">
           Finish building
         </button>
       </div>
       <div
-        className={`absolute right-4 bottom-12 z-30 mx-auto flex duration-500 transition-all flex-col ${
-          step !== 'photo' ? 'translate-y-24 opacity-0' : 'translate-y-0 delay-1000 opacity-100'
+        className={`bb-absolute bb-right-4 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-duration-500 bb-transition-all bb-flex-col ${
+          step !== 'photo'
+            ? 'bb-translate-y-24 bb-opacity-0'
+            : 'bb-translate-y-0 bb-delay-1000 bb-opacity-100'
         }`}
       >
-        <img id="preview" className="w-64 h-64 bg-red-400 mb-4 border border-white rounded-lg" />
-        <button onClick={download} className="btn w-64">
+        <img
+          id="preview"
+          className="bb-w-64 bb-h-64 bb-bg-red-400 bb-mb-4 bb-border bb-border-white bb-rounded-lg"
+        />
+        <button onClick={download} className="bb-btn bb-w-64">
           Download build
         </button>
       </div>
