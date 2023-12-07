@@ -3,13 +3,11 @@ import { WebGLRenderer, PCFSoftShadowMap, AxesHelper } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { CameraFactory } from './CameraFactory'
 import { BuilderScene } from './BuilderScene'
-import { TutorialScene } from './TutorialScene'
 import { Pointer } from './Pointer'
 const MAX_PIXEL_RATIO = 1.5
 export class Application {
-  constructor({ canvas, isTutorial = false, cameraAnimation = true }) {
+  constructor({ canvas, cameraAnimation = true }) {
     this.canvas = canvas
-    this.isTutorial = isTutorial
     this.cameraAnimation = cameraAnimation
     this.makeCamera()
     this.makeRenderer()
@@ -19,11 +17,17 @@ export class Application {
     this.initialize()
 
     this.snapBuild = false
-    // this.makeAxesHelper()
   }
   initialize() {
     this.render = this.render.bind(this)
     this.$ticker.add(this.render)
+    // window.addEventListener('resize', this.handleResize.bind(this))
+  }
+  handleResize() {
+    this.camera.aspect = this.canvas.clientWidth / this.canvas.clientHeight
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight)
+    this.renderer.setPixelRatio(Math.max(window.devicePixelRatio, MAX_PIXEL_RATIO))
   }
   makeRenderer() {
     this.renderer = new WebGLRenderer({ canvas: this.canvas })
@@ -34,26 +38,15 @@ export class Application {
     this.canvas.parentElement?.appendChild(this.renderer.domElement)
   }
   makeScene() {
-    if (this.isTutorial) {
-      this.scene = new TutorialScene({
-        $application: this,
-        $ticker: this.$ticker,
-        $pointer: this.$pointer,
-        $camera: this.$camera,
-        $orbitControls: this.orbitControls,
-        $renderer: this.renderer,
-      })
-    } else {
-      this.scene = new BuilderScene({
-        $application: this,
-        $ticker: this.$ticker,
-        $pointer: this.$pointer,
-        $camera: this.$camera,
-        $orbitControls: this.orbitControls,
-        $renderer: this.renderer,
-        $cameraAnimation: this.cameraAnimation,
-      })
-    }
+    this.scene = new BuilderScene({
+      $application: this,
+      $ticker: this.$ticker,
+      $pointer: this.$pointer,
+      $camera: this.$camera,
+      $orbitControls: this.orbitControls,
+      $renderer: this.renderer,
+      $cameraAnimation: this.cameraAnimation,
+    })
   }
   makeCamera() {
     const aspectRatio = this.canvas.clientWidth / this.canvas.clientHeight

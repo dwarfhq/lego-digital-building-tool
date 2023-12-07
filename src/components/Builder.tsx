@@ -15,11 +15,33 @@ function Builder() {
   // const [isShowingTips, setIsShowingTips] = useState(false)
   const [step, setStep] = useState<Step>('building')
   const app = useRef(null)
+  const fullscreenRef = useRef(null)
+  const canvasRef = useRef(null)
 
+  function fullscreenListener() {
+    const canvas = canvasRef.current
+    if (!document.fullscreenElement) {
+      canvas.style.removeProperty('width')
+      canvas.style.removeProperty('height')
+    } else {
+      // Remove transition classes when resizing the canvas to fit the entire fullscreened parent
+      canvas.classList.remove('bb-duration-500')
+      canvas.classList.remove('bb-transition-all')
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+    }
+    setTimeout(() => {
+      app.current.handleResize()
+    }, 500)
+  }
   useEffect(() => {
-    const canvasDom = document.getElementById('builder')
+    app.current = new Application({ canvas: canvasRef.current })
 
-    app.current = new Application({ canvas: canvasDom })
+    const fullscreenElement = fullscreenRef.current
+    fullscreenElement.addEventListener('fullscreenchange', fullscreenListener)
+    return () => {
+      fullscreenElement.removeEventListener('fullscreenchange', fullscreenListener)
+    }
   }, [])
 
   function closeTips() {
@@ -53,17 +75,34 @@ function Builder() {
     // TODO: Save build somewhere in v2 so we can show results later
   }
 
+  function toggleFullscreen() {
+    // Will trigger the event listener added in useEffect
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      if (fullscreenRef.current.requestFullscreen) {
+        fullscreenRef.current.requestFullscreen()
+      }
+    }
+  }
+
   function download() {
     app.current.downloadScene()
   }
   return (
-    <div className="bb-w-full bb-h-full bb-overflow-hidden bb-relative bb-bg-purple ">
+    <div
+      className="bb-w-full bb-h-full bb-overflow-hidden bb-relative bb-bg-purple "
+      ref={fullscreenRef}
+    >
       <canvas
         className={`bb-w-full bb-h-full bb-transition-all bb-duration-500 bb-noselect ${
           step === 'tips' ? 'bb--translate-y-[20vh] bb-scale-125' : 'bb-translate-y-0 bb-scale-100 '
         }`}
-        id="builder"
+        ref={canvasRef}
       ></canvas>
+      <button className="bb-absolute bb-z-20 bb-left-4 bb-top-4" onClick={toggleFullscreen}>
+        Full screen
+      </button>
       <div
         className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-duration-500 bb-transition-all ${
           step === 'tips'

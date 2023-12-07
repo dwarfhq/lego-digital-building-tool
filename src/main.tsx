@@ -32,7 +32,7 @@ const testOptions = {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <div className="bb-w-screen bb-h-screen">
+  <div className="bb-w-screen bb-max-w-[1400px] bb-mt-24 bb-mx-auto bb-aspect-video ">
     <BrickBuilder options={testOptions} />
   </div>
 )

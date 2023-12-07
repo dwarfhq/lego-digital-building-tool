@@ -3,7 +3,7 @@ import BuildingTips from './BuildingTips'
 function TipsOverlay({ isShowingTips, closeTips }) {
   return (
     <div
-      className={`bb-absolute bb-z-10 bb-opacity-0 bb-origin-bottom bb-translate-y-[50%] bb-w-full bb-tips-bg bb-h-screen bb-transition-all bb-duration-500 ${
+      className={`bb-absolute bb-z-10 bb-opacity-0 bb-origin-bottom bb-translate-y-[50%] bb-w-full bb-tips-bg bb-h-full bb-transition-all bb-duration-500 ${
         isShowingTips ? '!bb-translate-y-0 !bb-opacity-100' : 'bb-pointer-events-none'
       }`}
     >
