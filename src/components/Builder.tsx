@@ -1,19 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Application } from '../builder/Application'
-
+import SvgFullScreen from '@/assets/icons/full-screen.svg?react'
 import TipsToggle from './TipsToggle'
-
+import gsap from 'gsap'
 import useBricksStore from '../store/bricks'
 import TipsOverlay from './TipsOverlay'
+import FinishButton from './FinishButton'
+import SnapPhotoButton from './SnapPhotoButton'
+import PhotoModal from './PhotoModal'
+import useActivityStore from '../store/activity'
+import ConfirmationOverlay from './ConfirmationOverlay'
+import { checkBrickConnections } from '../js/utils'
 
-const steps = ['tips', 'building', 'photo'] as const
+const steps = ['initial', 'tips', 'confirmation', 'building', 'photo'] as const
 
 type Step = (typeof steps)[number]
 
 function Builder() {
   // const [isShowingTips, setIsShowingTips] = useState(false)
-  const [step, setStep] = useState<Step>('building')
+  const [step, setStep] = useState<Step>('initial')
   const app = useRef(null)
   const fullscreenRef = useRef(null)
   const canvasRef = useRef(null)
@@ -39,12 +45,15 @@ function Builder() {
 
     const fullscreenElement = fullscreenRef.current
     fullscreenElement.addEventListener('fullscreenchange', fullscreenListener)
+    gsap.delayedCall(4, () => {
+      setStep('tips')
+    })
     return () => {
       fullscreenElement.removeEventListener('fullscreenchange', fullscreenListener)
     }
   }, [])
 
-  function closeTips() {
+  function setBuildingState() {
     setStep('building')
   }
 
@@ -52,11 +61,22 @@ function Builder() {
     setStep('tips')
   }
 
+  async function attemptSubmit() {
+    const bricks = useBricksStore.getState().bricks
+    const isConnected = checkBrickConnections(bricks)
+
+    if (!isConnected) {
+      setStep('confirmation')
+    } else {
+      await submit()
+    }
+  }
+
   async function submit() {
     const bricks = useBricksStore.getState().bricks
+
     const time = useBricksStore.getState().time
     const moves = useBricksStore.getState().moves
-
     const data = {
       id: uuidv4(),
       createdAt: Date.now(),
@@ -68,9 +88,6 @@ function Builder() {
     }
     console.log('APP IN SUBMIT', app)
     console.log('data:', data)
-    // Takes a screenshot of the current scene
-    app.current.snapBuild = true
-    setStep('photo')
 
     // TODO: Save build somewhere in v2 so we can show results later
   }
@@ -86,8 +103,22 @@ function Builder() {
     }
   }
 
+  function snapPhoto() {
+    // Takes a screenshot of the current scene
+    app.current.snapBuild = true
+    setStep('photo')
+  }
+
   function download() {
-    app.current.downloadScene()
+    const activityName = useActivityStore.getState().name
+    const date = new Date().toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+
+    const fileName = `${activityName} - ${date}`
+    app.current.downloadScene(fileName)
   }
   return (
     <div
@@ -100,38 +131,35 @@ function Builder() {
         }`}
         ref={canvasRef}
       ></canvas>
-      <button className="bb-absolute bb-z-20 bb-left-4 bb-top-4" onClick={toggleFullscreen}>
-        Full screen
+      <button
+        className="bb-absolute bb-z-20 bb-left-8 bb-top-8 bb-bg-purple-dark bb-p-2 bb-rounded bb-text-white bb-flex bb-items-center bb-gap-2"
+        onClick={toggleFullscreen}
+      >
+        <SvgFullScreen className="bb-w-4 bb-h-4" /> <span className="">Full screen</span>
       </button>
       <div
-        className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-duration-500 bb-transition-all ${
-          step === 'tips'
+        className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-gap-2 bb-duration-500 bb-transition-all ${
+          step !== 'building'
             ? 'bb-translate-y-24 bb-opacity-0'
             : 'bb-translate-y-0 bb-delay-1000 bb-opacity-100'
         }`}
       >
-        <button onClick={submit} className="bb-btn bb-w-64">
-          Finish building
-        </button>
+        <FinishButton onClick={attemptSubmit} />
+        <SnapPhotoButton onClick={snapPhoto} />
       </div>
-      <div
-        className={`bb-absolute bb-right-4 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-duration-500 bb-transition-all bb-flex-col ${
-          step !== 'photo'
-            ? 'bb-translate-y-24 bb-opacity-0'
-            : 'bb-translate-y-0 bb-delay-1000 bb-opacity-100'
-        }`}
-      >
-        <img
-          id="preview"
-          className="bb-w-64 bb-h-64 bb-bg-red-400 bb-mb-4 bb-border bb-border-white bb-rounded-lg"
-        />
-        <button onClick={download} className="bb-btn bb-w-64">
-          Download build
-        </button>
-      </div>
+      <PhotoModal step={step} onDownloadClick={download} onCloseClick={() => setStep('building')} />
 
-      <TipsToggle openTips={openTips} closeTips={closeTips} isShowingTips={step === 'tips'} />
-      <TipsOverlay closeTips={closeTips} isShowingTips={step === 'tips'} />
+      <TipsToggle
+        openTips={openTips}
+        closeTips={setBuildingState}
+        isShowingTips={step === 'tips'}
+      />
+      <TipsOverlay closeTips={setBuildingState} isShowingTips={step === 'tips'} />
+      <ConfirmationOverlay
+        continueBuilding={setBuildingState}
+        closeAndSubmit={submit}
+        isShowingConfirmation={step === 'confirmation'}
+      />
     </div>
   )
 }
