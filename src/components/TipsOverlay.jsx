@@ -10,7 +10,7 @@ function TipsOverlay({ isShowingTips, closeTips }) {
       <div className="bb-absolute bb-inset-x-0 bb-flex bb-flex-col bb-items-center bb-mx-auto bb-bottom-12 ">
         <span className="bb-text-[32px] bb-mb-[30px] bb-text-white bb-font-black">Tips</span>
         <BuildingTips />
-        <button className="bb-btn bb-w-64" onClick={closeTips}>
+        <button className="bb-btn-primary bb-w-64" onClick={closeTips}>
           Got it!
         </button>
       </div>

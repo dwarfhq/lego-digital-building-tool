@@ -16,14 +16,14 @@ body {
   .bb-headline {
     @apply bb-text-lg bb-font-black lg:bb-text-xl;
   }
-  .bb-btn:disabled {
-    @apply bb-bg-white bb-text-black/20;
-  }
 }
 
 @layer components {
-  .bb-btn {
-    @apply bb-bg-yellow bb-text-black bb-rounded-full bb-px-4 bb-py-2 bb-font-black bb-h-[50px] lg:bb-h-[60px] bb-center lg:bb-px-7 lg:bb-py-4 bb-text-base lg:bb-text-md lg:bb-leading-[1.375rem];
+  .bb-btn-primary {
+    @apply bb-bg-purple-dark bb-h-10 bb-rounded bb-text-white;
+  }
+  .bb-btn-secondary {
+    @apply bb-bg-[#DD689E] bb-text-white bb-rounded bb-h-10;
   }
 }
 

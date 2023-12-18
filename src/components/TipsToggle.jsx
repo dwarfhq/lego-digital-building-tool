@@ -20,7 +20,7 @@ function TipsToggle({ isShowingTips, openTips, closeTips }) {
           }`}
         >
           <span>Tips</span>
-          <SvgClose className="bb-w-4" />
+          <SvgClose className="bb-w-3" />
         </button>
       </div>
     </div>
