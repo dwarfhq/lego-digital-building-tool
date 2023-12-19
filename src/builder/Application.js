@@ -82,7 +82,6 @@ export class Application {
     this.pointer = new Pointer(this.renderer.domElement)
   }
   captureScene() {
-    console.log('capture here')
     // Create an image of the current canvas and show it in the preview
     const dataURL = this.canvas.toDataURL('image/png')
     const img = document.querySelector('#bb-preview')
