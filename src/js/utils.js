@@ -9,7 +9,7 @@ export const ROOM_STATES = {
   CLOSED: 'closed',
 }
 
-export const mainBuilderColor = 'rgb(93, 59, 178)'
+export const mainBuilderColor = 'rgb(152, 115, 212)'
 
 export const tips = [
   {

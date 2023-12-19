@@ -6,7 +6,7 @@ function Stars() {
   const starsFullWidthRef = useRef([])
   const starsContainer = useRef(null)
 
-  const colors = ['#4C2F92', '#FFFFFF']
+  const colors = ['rgb(var(--bb-color-secondary))', '#FFFFFF']
   const amount = window.innerWidth >= 1024 ? 24 : 16
   const gridCols = window.innerWidth >= 1024 ? 6 : 4
   const gridRows = amount / gridCols

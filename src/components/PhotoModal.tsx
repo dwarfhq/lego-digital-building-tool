@@ -5,7 +5,7 @@ function PhotoModal({ step, onDownloadClick, onCloseClick }) {
   return (
     <>
       <div
-        className={`overlay bb-absolute bb-inset-0 bb-bg-purple-darkest/60 bb-transition-all bb-duration-500 bb-z-30 ${
+        className={`overlay bb-absolute bb-inset-0 bb-bg-black/50 bb-transition-all bb-duration-500 bb-z-30 ${
           step !== 'photo'
             ? 'bb-opacity-0 bb-pointer-events-none'
             : 'bb-opacity-100 bb-pointer-events-auto'
@@ -34,7 +34,7 @@ function PhotoModal({ step, onDownloadClick, onCloseClick }) {
           </button>
           <button
             onClick={onCloseClick}
-            className="bb-rounded-full bb-center bb-bg-purple-dark bb-w-12 bb-h-12 bb-pointer-events-auto"
+            className="bb-rounded-full bb-center bb-bg-secondary bb-w-12 bb-h-12 bb-pointer-events-auto"
           >
             <SvgClose className="bb-w-4" />
           </button>
