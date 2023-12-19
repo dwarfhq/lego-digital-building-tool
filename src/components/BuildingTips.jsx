@@ -46,7 +46,7 @@ function BuildingTips() {
             <div key={title} className="bb-duration-500 bb-snap-center bb-snap-always bb-relative">
               <div className="bb-flex bb-justify-center bb-items-center bb-w-full  bb-h-full bb-flex-col ">
                 <div className="bb-rounded-xl bb-bg-secondary bb-text-white  bb-aspect-square bb-p-2 bb-w-20 bb-h-20 bb-flex bb-justify-center bb-items-center bb-shrink-0">
-                  <TipIcon />
+                  <TipIcon className="bb-w-full bb-h-full" />
                 </div>
 
                 <div className="bb-mt-4 bb-text-lg bb-flex bb-flex-col bb-text-center bb-max-w-[200px]">
@@ -62,9 +62,10 @@ function BuildingTips() {
         })}
       </div>
       <div className="bb-flex bb-justify-center bb-gap-3 lg:bb-hidden bb-mt-8">
-        {tips.map((_, index) => {
+        {tips.map(({ title }, index) => {
           return (
             <div
+              key={title}
               className={`bb-w-3 bb-h-3 bb-bg-secondary bb-rounded-none bb-transition bb-duration-700 ${
                 activeIndex === index ? 'bb-bg-white bb-rotate-45' : ''
               }`}
