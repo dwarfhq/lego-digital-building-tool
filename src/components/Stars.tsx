@@ -24,45 +24,62 @@ function Stars() {
   }, [starsGrid])
 
   useEffect(() => {
-    let currentRow = 1
-    const newStarGrid = [...new Array(amount)].map((_, idx) => {
-      let x, y
-      if (idx % gridCols == 0) {
-        currentRow++
-      }
+    const resizeObserver = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        if (
+          entry.target === starsContainer.current &&
+          entry.contentRect.width &&
+          entry.contentRect.height
+        ) {
+          let currentRow = 1
+          const newStarGrid = [...new Array(amount)].map((_, idx) => {
+            if (idx % gridCols == 0) {
+              currentRow++
+            }
 
-      const containerWidth = starsContainer.current.getBoundingClientRect().width
-      const containerHeight = starsContainer.current.getBoundingClientRect().height
+            const containerWidth = starsContainer.current.getBoundingClientRect().width
+            const containerHeight = starsContainer.current.getBoundingClientRect().height
 
-      const offset = containerWidth >= 1024 ? 60 : 20
-      //align stars in  a grid horizontally and offset them with a random value between -60px and 60px on desktop and between -20px and 20px on mobile
-      x =
-        (containerWidth / gridCols) * ((idx % gridCols) + 0.5) +
-        Math.floor(Math.random() * offset * 2 - offset)
+            const offset = containerWidth >= 1024 ? 60 : 20
+            //align stars in  a grid horizontally and offset them with a random value between -60px and 60px on desktop and between -20px and 20px on mobile
+            const x =
+              (containerWidth / gridCols) * ((idx % gridCols) + 0.5) +
+              Math.floor(Math.random() * offset * 2 - offset)
 
-      //align stars in  a grid vertically and offset them with a random value between -60px and 60px on desktop and between -20px and 20px on mobile
-      y =
-        (containerHeight / gridRows) * (currentRow % gridRows) +
-        containerHeight / (gridRows * 2) +
-        Math.floor(Math.random() * offset * 2 - offset)
+            //align stars in  a grid vertically and offset them with a random value between -60px and 60px on desktop and between -20px and 20px on mobile
+            const y =
+              (containerHeight / gridRows) * (currentRow % gridRows) +
+              containerHeight / (gridRows * 2) +
+              Math.floor(Math.random() * offset * 2 - offset)
 
-      const color = Math.floor(Math.random() * colors.length)
+            const color = Math.floor(Math.random() * colors.length)
 
-      return {
-        x,
-        y,
-        color,
+            return {
+              x,
+              y,
+              color,
+            }
+          })
+          setStarsGrid(newStarGrid)
+          setTimeout(() => {
+            starsFullWidthRef.current.forEach(star => {
+              gsap.to(star, fadeInAnimation)
+              gsap.to(star, levitationAnimation())
+            })
+          }, 250)
+        }
       }
     })
 
-    setStarsGrid(newStarGrid)
+    if (starsContainer.current) {
+      resizeObserver.observe(starsContainer.current)
+    }
 
-    setTimeout(() => {
-      starsFullWidthRef.current.forEach(star => {
-        gsap.to(star, fadeInAnimation)
-        gsap.to(star, levitationAnimation())
-      })
-    }, 250)
+    return () => {
+      if (starsContainer.current) {
+        resizeObserver.unobserve(starsContainer.current)
+      }
+    }
   }, [])
 
   const levitationAnimation = () => {
