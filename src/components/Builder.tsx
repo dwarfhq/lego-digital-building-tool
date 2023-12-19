@@ -130,7 +130,7 @@ function Builder() {
         }`}
         ref={canvasRef}
       ></canvas>
-      <ToggleFullscreenButton onClick={toggleFullscreen} />
+      {document.fullscreenEnabled && <ToggleFullscreenButton onClick={toggleFullscreen} />}
       <div
         className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-8 lg:bb-bottom-12 bb-z-30 bb-mx-auto bb-w-full bb-flex bb-justify-center bb-gap-2 bb-duration-500 bb-transition-all bb-px-4 bb-max-w-[440px] ${
           step !== 'building'
