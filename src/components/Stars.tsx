@@ -5,6 +5,7 @@ function Stars() {
   const [starsGrid, setStarsGrid] = useState([])
   const starsFullWidthRef = useRef([])
   const starsContainer = useRef(null)
+  const hasInitialized = useRef(false)
 
   const colors = ['rgb(var(--bb-color-secondary))', '#FFFFFF']
   const amount = window.innerWidth >= 1024 ? 24 : 16
@@ -29,8 +30,10 @@ function Stars() {
         if (
           entry.target === starsContainer.current &&
           entry.contentRect.width &&
-          entry.contentRect.height
+          entry.contentRect.height &&
+          !hasInitialized.current
         ) {
+          hasInitialized.current = true
           let currentRow = 1
           const newStarGrid = [...new Array(amount)].map((_, idx) => {
             if (idx % gridCols == 0) {
