@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Application } from '../builder/Application'
-import SvgFullScreen from '@/assets/icons/full-screen.svg?react'
+
 import TipsToggle from './TipsToggle'
 import gsap from 'gsap'
 import useBricksStore from '../store/bricks'
@@ -12,6 +12,7 @@ import PhotoModal from './PhotoModal'
 import useActivityStore from '../store/activity'
 import ConfirmationOverlay from './ConfirmationOverlay'
 import { checkBrickConnections } from '../js/utils'
+import ToggleFullscreenButton from './ToggleFullscreenButton'
 
 const steps = ['initial', 'tips', 'confirmation', 'building', 'photo'] as const
 
@@ -86,8 +87,6 @@ function Builder() {
       },
       bricks,
     }
-    console.log('APP IN SUBMIT', app)
-    console.log('data:', data)
 
     // TODO: Save build somewhere in v2 so we can show results later
   }
@@ -122,7 +121,7 @@ function Builder() {
   }
   return (
     <div
-      className="bb-w-full bb-h-full bb-overflow-hidden bb-relative bb-bg-purple "
+      className="bb-w-full bb-h-full bb-overflow-hidden bb-relative bb-bg-background "
       ref={fullscreenRef}
     >
       <canvas
@@ -131,17 +130,12 @@ function Builder() {
         }`}
         ref={canvasRef}
       ></canvas>
-      <button
-        className="bb-absolute bb-z-20 bb-left-8 bb-top-8 bb-bg-purple-dark bb-p-2 bb-rounded bb-text-white bb-flex bb-items-center bb-gap-2"
-        onClick={toggleFullscreen}
-      >
-        <SvgFullScreen className="bb-w-4 bb-h-4" /> <span className="">Full screen</span>
-      </button>
+      <ToggleFullscreenButton onClick={toggleFullscreen} />
       <div
-        className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-12 bb-z-30 bb-mx-auto bb-flex bb-gap-2 bb-duration-500 bb-transition-all ${
+        className={`bb-absolute bb-left-1/2 bb--translate-x-1/2 bb-bottom-8 lg:bb-bottom-12 bb-z-30 bb-mx-auto bb-w-full bb-flex bb-justify-center bb-gap-2 bb-duration-500 bb-transition-all bb-px-4 bb-max-w-[440px] ${
           step !== 'building'
             ? 'bb-translate-y-24 bb-opacity-0'
-            : 'bb-translate-y-0 bb-delay-1000 bb-opacity-100'
+            : 'bb-translate-y-0 bb-delay-700 bb-opacity-100'
         }`}
       >
         <FinishButton onClick={attemptSubmit} />
