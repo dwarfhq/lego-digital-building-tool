@@ -35,7 +35,6 @@ export class BuilderScene extends Scene {
   initialize() {
     this.render = this.render.bind(this)
     this.$ticker.add(this.render)
-    console.log('camera')
     if (this.$cameraAnimation) {
       gsap.to(this.$camera.position, {
         delay: 2,
@@ -90,7 +89,6 @@ export class BuilderScene extends Scene {
     await BrickFactory.load()
 
     const exerciseBricks = useActivityStore.getState().bricks || []
-    console.log('exerciseBricks:', exerciseBricks)
 
     // We define some positions for the bricks spawn points. The first ones will be about where the camera is focused on, with the rest expanding in each direction if there are a lot of bricks in the exercise
     const startingPositions = [

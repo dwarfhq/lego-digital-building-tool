@@ -1,29 +1,23 @@
-@import url('https://use.typekit.net/ole3xcp.css');
+@import url('https://assets.lego.com/fonts/v1/cera-pro.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'effra', sans-serif;
-  @apply bb-text-base;
-}
-
 @layer base {
-  input,
-  button {
-    @apply focus:bb-outline-none focus:bb-ring-1 focus:bb-ring-black bb-transition-colors bb-duration-300 bb-ease-in-out;
-  }
-  .bb-headline {
-    @apply bb-text-lg bb-font-black lg:bb-text-xl;
-  }
-  .bb-btn:disabled {
-    @apply bb-bg-white bb-text-black/20;
+  :root {
+    --bb-color-primary: 238 95 160;
+    --bb-color-secondary: 120 72 199;
+    --bb-color-background: 152 115 212;
   }
 }
 
 @layer components {
-  .bb-btn {
-    @apply bb-bg-yellow bb-text-black bb-rounded-full bb-px-4 bb-py-2 bb-font-black bb-h-[50px] lg:bb-h-[60px] bb-center lg:bb-px-7 lg:bb-py-4 bb-text-base lg:bb-text-md lg:bb-leading-[1.375rem];
+  .bb-btn-primary {
+    @apply bb-bg-primary bb-text-white bb-rounded bb-h-10;
+  }
+  .bb-btn-secondary {
+    @apply bb-bg-secondary bb-text-white bb-rounded bb-h-10;
   }
 }
 
@@ -53,5 +47,10 @@ body {
   }
 }
 .bb-tips-bg {
-  background: linear-gradient(to bottom, rgba(255, 0, 0, 0), rgb(76, 47, 146), rgb(76, 47, 146));
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0),
+    rgb(var(--bb-color-background)),
+    rgb(var(--bb-color-background))
+  );
 }

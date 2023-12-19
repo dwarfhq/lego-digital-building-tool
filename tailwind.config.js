@@ -20,7 +20,7 @@ export default {
       ],
 
       base: [
-        '1.125rem',
+        '1rem',
         {
           lineHeight: '1.1',
           letterSpacing: '-0.02em',
@@ -67,6 +67,9 @@ export default {
       medium: '500',
       black: '900',
     },
+    fontFamily: {
+      sans: ['Cera Pro', 'system-ui', '-apple-system', 'sans-serif', 'arial'],
+    },
     spacing: {
       px: '1px',
       0: '0px',
@@ -110,33 +113,9 @@ export default {
     },
     extend: {
       colors: {
-        green: 'rgb(2, 169, 71)',
-        'green-dark': 'rgb(7, 144, 64)',
-        'purple-light': 'rgb(93, 59, 178)',
-        purple: 'rgb(76, 47, 146)',
-        'purple-dark': 'rgb(61, 34, 125)',
-        'purple-darkest': 'rgb(49, 27, 100)',
-        yellow: 'rgb(255, 207, 0)',
-        pink: 'rgb(248, 187, 214)',
-        cream: 'rgb(240, 240, 239)',
-        red: 'rgb(227, 0, 11)',
-      },
-      screens: {
-        'h-lg': { raw: '(min-height: 900px)' },
-        'h-md': { raw: '(min-height: 768px)' },
-        'h-sm': { raw: '(min-height: 640px)' },
-        'h-xs': { raw: '(min-height: 400px)' },
-        xs: '350px',
-        '2xl': '1440px',
-      },
-      keyframes: {
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-2deg)' },
-          '50%': { transform: 'rotate(2deg)' },
-        },
-      },
-      animation: {
-        wiggle: 'wiggle 0.5s ease-in-out infinite',
+        primary: 'rgb(var(--bb-color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--bb-color-secondary) / <alpha-value>)',
+        background: 'rgb(var(--bb-color-background) / <alpha-value>)',
       },
     },
   },

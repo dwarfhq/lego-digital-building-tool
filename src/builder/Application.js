@@ -82,16 +82,15 @@ export class Application {
     this.pointer = new Pointer(this.renderer.domElement)
   }
   captureScene() {
-    console.log('capture here')
-    // Create an image of the current canvas and download that image
+    // Create an image of the current canvas and show it in the preview
     const dataURL = this.canvas.toDataURL('image/png')
-    const img = document.querySelector('#preview')
+    const img = document.querySelector('#bb-preview')
     img.src = dataURL
   }
-  downloadScene() {
-    const img = document.querySelector('#preview')
+  downloadScene(fileName) {
+    const img = document.querySelector('#bb-preview')
     const link = document.createElement('a')
-    link.download = 'build.png'
+    link.download = `${fileName}.png`
     link.href = img.src
     document.body.appendChild(link)
     link.click()

@@ -15,7 +15,7 @@ function BrickBuilder({ options }: { options: Activity }) {
 
   const [step, setStep] = useState<Step>('start-building')
   return (
-    <div className="bb-w-full bb-h-full bb-bg-green bb-overflow-hidden">
+    <div className="bb-w-full bb-h-full bb-bg-background bb-overflow-hidden bb-font-sans">
       {step === 'start-building' && <StartBuilding start={() => setStep('building')} />}
       {step === 'building' && (
         <motion.div
